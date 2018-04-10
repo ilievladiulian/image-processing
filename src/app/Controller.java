@@ -1,6 +1,7 @@
 package app;
 
 import javafx.concurrent.WorkerStateEvent;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,8 +13,11 @@ import javafx.stage.FileChooser;
 import util.MirrorHorizontallyService;
 import util.MirrorVerticallyService;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 
 public class Controller {
 
@@ -41,7 +45,7 @@ public class Controller {
 
 	public void loadTigerImage() {
 		this.defaultPath = "default_images/tiger.bmp";
-		this.fileName.setText("");
+		this.fileName.setText("tiger.bmp");
 		try {
 			Image image = new Image(new FileInputStream(this.defaultPath));
 			this.originalImage.setImage(image);
@@ -52,7 +56,7 @@ public class Controller {
 
 	public void loadCarImage() {
 		this.defaultPath = "default_images/car.bmp";
-		this.fileName.setText("");
+		this.fileName.setText("car.bmp");
 		try {
 			Image image = new Image(new FileInputStream(this.defaultPath));
 			this.originalImage.setImage(image);
@@ -63,7 +67,7 @@ public class Controller {
 
 	public void loadDogImage() {
 		this.defaultPath = "default_images/dog.bmp";
-		this.fileName.setText("");
+		this.fileName.setText("dog.bmp");
 		try {
 			Image image = new Image(new FileInputStream(this.defaultPath));
 			this.originalImage.setImage(image);
@@ -104,6 +108,14 @@ public class Controller {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		directoryChooser.setTitle("Alegeti directorul");
 		File selectedDirectory = directoryChooser.showDialog(window.getScene().getWindow());
+		String fileName = selectedDirectory.getPath() + "/" + this.fileName.getText().substring(0, this.fileName.getText().length() - 4)
+				+ "_mirrored_" + this.orientation + "ly.bmp";
+		BufferedImage bImage = SwingFXUtils.fromFXImage(this.resultImage.getImage(), null);
+		try {
+			ImageIO.write(bImage, "png", new File(fileName));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private void loadMirrorOrientation() {
