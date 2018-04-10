@@ -4,20 +4,26 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.web.WebView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import util.MirrorHorizontallyService;
 import util.MirrorVerticallyService;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class Controller {
 
@@ -42,6 +48,8 @@ public class Controller {
 	ImageView resultImage;
 	@FXML
 	SplitPane splitPane;
+	@FXML
+	Hyperlink gitHubLink;
 
 	public void loadTigerImage() {
 		this.defaultPath = "default_images/tiger.bmp";
@@ -116,6 +124,21 @@ public class Controller {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public void initialize() {
+		this.gitHubLink.setOnAction(e -> {
+			if(Desktop.isDesktopSupported())
+			{
+				try {
+					Desktop.getDesktop().browse(new URI(this.gitHubLink.getText()));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (URISyntaxException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 	}
 
 	private void loadMirrorOrientation() {
