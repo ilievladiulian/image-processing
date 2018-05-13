@@ -132,6 +132,41 @@ public class AppController {
 		this.showImageData.setOnAction(event -> toggleShowImageData());
 	}
 
+	private void configureNodeTree() {
+		this.originalImageTab.setContent(this.originalImageData);
+		this.resultImageTab.setContent(this.resultImageData);
+		this.imageDataPane.getTabs().add(this.originalImageTab);
+		this.imageDataPane.getTabs().add(this.resultImageTab);
+		this.leftArea.getChildren().add(this.originalImage);
+		this.rightArea.getChildren().add(this.resultImage);
+		this.splitPane.getItems().add(this.leftArea);
+		this.splitPane.getItems().add(this.rightArea);
+		this.tigerImage.setToggleGroup(this.defaultImages);
+		this.dogImage.setToggleGroup(this.defaultImages);
+		this.carImage.setToggleGroup(this.defaultImages);
+		this.horizontalOrientation.setToggleGroup(this.mirrorOrientation);
+		this.verticalOrientation.setToggleGroup(this.mirrorOrientation);
+
+		this.window.getChildren().addAll(this.mirroringProgress, this.carImage, this.tigerImage, this.dogImage, this.horizontalOrientation, this.verticalOrientation,
+				this.fileName, this.splitPane, this.gitHubLink, this.date, this.imageDataPane, this.showImageData, this.loadImageButton, this.saveImageButton,
+				this.dateLabel, this.defaultImagesLabel, this.githubLabel, this.orientationLabel, this.storyLabel, this.titleLabel, this.mirroringButton);
+	}
+
+	private void configureTables() {
+		this.originalImageHeight.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getHeight()));
+		this.originalImageWidth.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getWidth()));
+		this.originalImageSize.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getSize()));
+		this.resultImageHeight.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getHeight()));
+		this.resultImageWidth.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getWidth()));
+		this.resultImageSize.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getSize()));
+		this.originalImageData.getColumns().add(this.originalImageHeight);
+		this.originalImageData.getColumns().add(this.originalImageWidth);
+		this.originalImageData.getColumns().add(this.originalImageSize);
+		this.resultImageData.getColumns().add(this.resultImageHeight);
+		this.resultImageData.getColumns().add(this.resultImageWidth);
+		this.resultImageData.getColumns().add(this.resultImageSize);
+	}
+
 	private void openGithubLink() {
 		if(Desktop.isDesktopSupported())
 		{
@@ -245,41 +280,6 @@ public class AppController {
 			ex.printStackTrace();
 		}
 		setImageData(this.originalImageData, this.originalImage.getImage(), selectedImage.length());
-	}
-
-	private void configureNodeTree() {
-		this.originalImageTab.setContent(this.originalImageData);
-		this.resultImageTab.setContent(this.resultImageData);
-		this.imageDataPane.getTabs().add(this.originalImageTab);
-		this.imageDataPane.getTabs().add(this.resultImageTab);
-		this.leftArea.getChildren().add(this.originalImage);
-		this.rightArea.getChildren().add(this.resultImage);
-		this.splitPane.getItems().add(this.leftArea);
-		this.splitPane.getItems().add(this.rightArea);
-		this.tigerImage.setToggleGroup(this.defaultImages);
-		this.dogImage.setToggleGroup(this.defaultImages);
-		this.carImage.setToggleGroup(this.defaultImages);
-		this.horizontalOrientation.setToggleGroup(this.mirrorOrientation);
-		this.verticalOrientation.setToggleGroup(this.mirrorOrientation);
-
-		this.window.getChildren().addAll(this.mirroringProgress, this.carImage, this.tigerImage, this.dogImage, this.horizontalOrientation, this.verticalOrientation,
-				this.fileName, this.splitPane, this.gitHubLink, this.date, this.imageDataPane, this.showImageData, this.loadImageButton, this.saveImageButton,
-				this.dateLabel, this.defaultImagesLabel, this.githubLabel, this.orientationLabel, this.storyLabel, this.titleLabel, this.mirroringButton);
-	}
-
-	private void configureTables() {
-		this.originalImageHeight.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getHeight()));
-		this.originalImageWidth.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getWidth()));
-		this.originalImageSize.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getSize()));
-		this.resultImageHeight.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getHeight()));
-		this.resultImageWidth.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getWidth()));
-		this.resultImageSize.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getSize()));
-		this.originalImageData.getColumns().add(this.originalImageHeight);
-		this.originalImageData.getColumns().add(this.originalImageWidth);
-		this.originalImageData.getColumns().add(this.originalImageSize);
-		this.resultImageData.getColumns().add(this.resultImageHeight);
-		this.resultImageData.getColumns().add(this.resultImageWidth);
-		this.resultImageData.getColumns().add(this.resultImageSize);
 	}
 
 	private void loadMirrorOrientation() {
